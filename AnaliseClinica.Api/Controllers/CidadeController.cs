@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AnaliseClinica.Domain.Entities;
+using AnaliseClinica.Domain.Enums;
 using AnaliseClinica.Domain.Repositories;
 using AnaliseClinica.Infra;
 using AnaliseClinica.Infra.ViewModels;
@@ -25,9 +26,17 @@ namespace AnaliseClinica.Api.Controllers
 
         [Route("v1/cidades")]
         [HttpGet]
-        public IEnumerable<Cidade> Get()
+        public IEnumerable<ListCidadeViewModel> Get()
         {
-            return _repository.GetAll();
+            var cidades = _repository.GetAll();
+
+            var obj = cidades.Select(c => new ListCidadeViewModel {
+                Id = c.Id,
+                Descricao = c.Descricao,
+                Uf = c.UF.ToString()
+            }).ToList();
+
+            return obj; //_repository.GetAll();
         }
 
         [Route("v1/cidades")]
