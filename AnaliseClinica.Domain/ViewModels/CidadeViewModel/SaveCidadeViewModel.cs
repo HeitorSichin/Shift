@@ -2,7 +2,7 @@
 using Flunt.Notifications;
 using Flunt.Validations;
 
-namespace AnaliseClinica.Infra.ViewModels.CidadeViewModel
+namespace AnaliseClinica.Domain.ViewModels.CidadeViewModel
 {
     public class SaveCidadeViewModel : Notifiable, IValidatable
     {
@@ -14,7 +14,7 @@ namespace AnaliseClinica.Infra.ViewModels.CidadeViewModel
         {
             AddNotifications(new Contract()
                     .HasMaxLen(Descricao, 200, "Descricao", "A descrição deve conter até 200 caracteres")
-                    .HasMinLen(Descricao, 3, "Descricao","A descrição deve conter pelo menos 3 caracteres")
+                    .HasMinLen(Descricao, 3, "Descricao", "A descrição deve conter pelo menos 3 caracteres")
                     .HasLen(Uf.ToString(), 2, "Uf", "O estado deve conter 2 caracteres")
                 );
         }

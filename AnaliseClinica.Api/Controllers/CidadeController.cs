@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AnaliseClinica.Domain.Entities;
-using AnaliseClinica.Domain.Enums;
 using AnaliseClinica.Domain.Repositories;
-using AnaliseClinica.Infra;
-using AnaliseClinica.Infra.ViewModels;
-using AnaliseClinica.Infra.ViewModels.CidadeViewModel;
-using Microsoft.AspNetCore.Http;
+using AnaliseClinica.Domain.ViewModels;
+using AnaliseClinica.Domain.ViewModels.CidadeViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnaliseClinica.Api.Controllers
@@ -28,15 +22,7 @@ namespace AnaliseClinica.Api.Controllers
         [HttpGet]
         public IEnumerable<ListCidadeViewModel> Get()
         {
-            var cidades = _repository.GetAll();
-
-            var obj = cidades.Select(c => new ListCidadeViewModel {
-                Id = c.Id,
-                Descricao = c.Descricao,
-                Uf = c.UF.ToString()
-            }).ToList();
-
-            return obj; //_repository.GetAll();
+            return _repository.GetAll();
         }
 
         [Route("v1/cidades")]
@@ -62,6 +48,54 @@ namespace AnaliseClinica.Api.Controllers
                 Success = true,
                 Message = "Cidade salva com sucesso",
                 Data = cidade
+            };
+        }
+
+        [Route("v1/cidades")]
+        [HttpPut]
+        public ResultViewModel Put([FromBody]SaveCidadeViewModel model)
+        {
+            model.Validate();
+            if (model.Invalid)
+                return new ResultViewModel
+                {
+                    Success = false,
+                    Message = "Não possível salvar a cidade",
+                    Data = model.Notifications
+                };
+
+            var cidade = _repository.GetById(model.Id);
+            if (cidade == null)
+                return new ResultViewModel
+                {
+                    Success = false,
+                    Message = "Cidade não encontrada",
+                    Data = null
+                };
+
+            cidade.Descricao = model.Descricao;
+            cidade.UF = model.Uf;
+            _repository.Update(cidade);
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Cidade salva com sucesso",
+                Data = new { cidade.Id, cidade.Descricao }
+            };
+        }
+
+        [Route("v1/cidades")]
+        [HttpDelete]
+        public ResultViewModel Delete([FromBody]Cidade model)
+        {
+            _repository.Delete(model);
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Cidade excluida com sucesso",
+                Data = null
             };
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace AnaliseClinica.Infra.ViewModels
+﻿namespace AnaliseClinica.Domain.ViewModels
 {
     public class ResultViewModel
     {

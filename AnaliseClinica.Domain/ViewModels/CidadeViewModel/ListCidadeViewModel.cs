@@ -1,4 +1,4 @@
-﻿namespace AnaliseClinica.Infra.ViewModels.CidadeViewModel
+﻿namespace AnaliseClinica.Domain.ViewModels.CidadeViewModel
 {
     public class ListCidadeViewModel
     {

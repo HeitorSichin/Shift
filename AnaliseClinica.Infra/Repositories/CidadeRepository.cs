@@ -1,6 +1,7 @@
 ﻿using AnaliseClinica.Domain.Entities;
 using AnaliseClinica.Domain.Repositories;
-using AnaliseClinica.Infra.ViewModels.CidadeViewModel;
+using AnaliseClinica.Domain.ViewModels.CidadeViewModel;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,9 +16,17 @@ namespace AnaliseClinica.Infra.Repositories
             _context = context;
         }
 
-        public IEnumerable<Cidade> GetAll()
+        public IEnumerable<ListCidadeViewModel> GetAll()
         {
-            return _context.Cidades;
+            return _context.Cidades
+                        .Select(c => new ListCidadeViewModel
+                        {
+                            Id = c.Id,
+                            Descricao = c.Descricao,
+                            Uf = c.UF.ToString()
+                        })
+                        .AsNoTracking()
+                        .ToList();
         }
 
         public Cidade GetById(int id)
@@ -37,9 +46,8 @@ namespace AnaliseClinica.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Cidade cidade)
         {
-            var cidade = _context.Cidades.Find(id);
             _context.Cidades.Remove(cidade);
             _context.SaveChanges();
         }
