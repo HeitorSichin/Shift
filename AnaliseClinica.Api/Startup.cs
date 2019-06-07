@@ -43,6 +43,7 @@ namespace AnaliseClinica.Api
             //}
 
             //app.UseHttpsRedirection();
+            app.UseStaticFiles();   
             app.UseMvc();
         }
     }
