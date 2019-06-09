@@ -1,0 +1,26 @@
+﻿body {
+    background: #eee;
+}
+
+.container {
+    background: #fff;
+    margin-top: 20px;
+}
+
+.titulo {
+    text-align:center;
+    margin-top: 10px;
+}
+
+label {
+    margin-bottom: 0!important;
+}
+
+.modal-header {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background-color: #6c757d;
+    color: #fff;
+}
+
+

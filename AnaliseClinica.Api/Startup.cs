@@ -24,11 +24,15 @@ namespace AnaliseClinica.Api
             services.AddDbContext<AnaliseClinicaContext>(options => 
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<AnaliseClinicaContext, AnaliseClinicaContext>();
             services.AddTransient<ICidadeRepository, CidadeRepository>();
+            services.AddTransient<IPostoColetaRepository, PostoColetaRepository>();
+            services.AddTransient<IPacienteRepository, PacienteRepository>();
+            services.AddTransient<IMedicoRepository, MedicoRepository>();
+            services.AddTransient<IConvenioRepository, ConvenioRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -43,6 +47,15 @@ namespace AnaliseClinica.Api
             //}
 
             //app.UseHttpsRedirection();
+
+            app.UseCors(x =>
+            {
+                x.AllowAnyHeader();
+                x.AllowAnyMethod();
+                x.AllowAnyOrigin();
+            });
+
+
             app.UseStaticFiles();   
             app.UseMvc();
         }

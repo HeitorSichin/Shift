@@ -2,17 +2,220 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    
-    
+
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="lib/fontawesome/css/all.css" rel="stylesheet" />
+
     <script src="lib/jquery/jquery-3.3.1.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
 
     <title>Analise Clínica</title>
 </head>
 <body>
-    <h3>heitor</h3>
-    <button class="btn btn-danger">TESTE</button>
+    <input type="hidden" name="OrdemServicoID" id="OrdemServicoID" />
+    <input type="hidden" name="ExameOrdemServicoID" id="ExameOrdemServicoID" />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="titulo">Ordem de Serviço</h3>
+            </div>
+            <div class="col-md-12"><hr /></div>
+        </div>
+
+        <!--FILTROS DA TABELA -->
+        <div class="row">
+            <div class="col-md-4">
+                <label>Data</label>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="date" class="form-control" aria-describedby="label-input-group" />
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="label-input-group">Até</span>
+                    </div>
+                    <input type="date" class="form-control" aria-describedby="label-input-group" />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label>Paciente</label>
+                <input type="text" name="pacienteFiltro" id="pacienteFiltro" class="form-control form-control-sm" placeholder="Digite parte do nome do paciente..." />
+            </div>
+            <div class="col-md-3" style="margin-top: 24px;">
+                <button class="btn btn-primary btn-sm" title="Aplicar o filtro no grid"><i class="fa fa-filter"></i> Filtro</button>
+                <button class="btn btn-primary btn-sm" title="Inerir uma nova ordem de serviço" onclick="OrdemServico.AbrirModalCadastro()"><i class="fa fa-plus-circle"></i> Novo</button>
+            </div>
+        </div>
+
+        <!-- TABELA DAS ORDENS DE SERVIÇOS-->
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-sm">
+                    <caption>Lista de Ordem de Serviços</caption>
+                    <thead>
+                        <tr>
+                            <th width="5%"></th>
+                            <th width="5%"></th>
+                            <th>Data</th>
+                            <th>Nome Paciente</th>
+                            <th>Posto de Coleta</th>
+                            <th>Médico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                            <td><button class="btn btn-primary"><i class="fa fa-pencil-alt"></i></button></td>
+                            <td>08/06/2019</td>
+                            <td>Heitor Henrique Sichin</td>
+                            <td>Unidade Centro</td>
+                            <td>Dr. Gregory House</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal Cadastro Ordem Serviço -->
+    <div class="modal fade" id="modalCadastroOrdemServico" tabindex="-1" role="dialog" aria-labelledby="modalCadastroLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCadastroLabel">Inserir uma ordem de serviço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCadastroOrdemServico" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="dataCadastro">Data</label>
+                                <input type="date" name="dataCadastro" id="dataCadastro" class="form-control form-control-sm" />
+                            </div>
+                            <div class="col-md-9">
+                                <label for="postoColeta">Posto de Coleta</label>
+                                <select id="postoColeta" name="postoColeta" class="form-control form-control-sm">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="paciente">Paciente</label>
+                                <select id="paciente" name="paciente" class="form-control form-control-sm"></select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for="medico">Médico</label>
+                                <select id="medico" name="medico" class="form-control form-control-sm"></select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="convenio">Convênio</label>
+                                <select id="convenio" name="convenio" class="form-control form-control-sm"></select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <div class="col-md-12 text-right" style="padding-top: 10px">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="OrdemServico.AbrirModalCadastroExame()"><i class="fa fa-plus"></i> Adicionar Exames</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-sm table-responsive-sm">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th></th>
+                                        <th>Exame</th>
+                                        <th>Entrega</th>
+                                        <th>Preço</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><button class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button></td>
+                                        <td>Exame exame exame</td>
+                                        <td>10/06/2019</td>
+                                        <td>R$ 123,50</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="OrdemServico.SalvarOrdemServico()"><i class="fa fa-save"></i> Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Cadastro de Exames -->
+    <div class="modal fade" id="modalCadastroExame" tabindex="-1" role="dialog" aria-labelledby="modalCadastroExame Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCadastroLabel">Inserir exames na ordem de serviço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="dataCadastro">Data</label>
+                            <input type="date" name="dataCadastro" id="dataCadastro" class="form-control form-control-sm" />
+                        </div>
+                        <div class="col-md-9">
+                            <label for="postoColeta">Posto de Coleta</label>
+                            <input type="text" name="postoColeta" id="postoColeta" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="paciente">Paciente</label>
+                            <input type="text" name="paciente" id="paciente" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="medico">Médico</label>
+                            <input type="text" name="medico" id="medico" class="form-control form-control-sm" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="convenio">Convênio</label>
+                            <input type="text" name="convenio" id="convenio" class="form-control form-control-sm" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="OrdemServico.SalvarExame()"><i class="fa fa-save"></i> Salvar Exame</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>
