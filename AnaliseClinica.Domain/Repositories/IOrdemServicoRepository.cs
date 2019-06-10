@@ -1,13 +1,13 @@
 ﻿using AnaliseClinica.Domain.Entities;
+using AnaliseClinica.Domain.ViewModels.OrdemServicoViewModel;
 using System.Collections.Generic;
 
 namespace AnaliseClinica.Domain.Repositories
 {
     public interface IOrdemServicoRepository
     {
-        bool Save(OrdemServico ordemServico);
-        IEnumerable<OrdemServico> GetAll();
+        OrdemServico Save(SaveOrdemServicoViewModel ordemServico);
+        IEnumerable<ListOrdemServicoViewModel> GetAll();
         OrdemServico GetById(int id);
-
     }
 }

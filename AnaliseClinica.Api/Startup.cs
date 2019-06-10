@@ -33,6 +33,9 @@ namespace AnaliseClinica.Api
             services.AddTransient<IPacienteRepository, PacienteRepository>();
             services.AddTransient<IMedicoRepository, MedicoRepository>();
             services.AddTransient<IConvenioRepository, ConvenioRepository>();
+            services.AddTransient<IExameRepository, ExameRepository>();
+            services.AddTransient<IOrdemServicoRepository, OrdemServicoRepository>();
+            services.AddTransient<IOrdemServicoExameRepository, OrdemServicoExameRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

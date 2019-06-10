@@ -16,7 +16,7 @@ namespace AnaliseClinica.Infra.Maps
             builder.Property(x => x.Preco).IsRequired().HasColumnType("money");
 
             builder.HasOne(x => x.Exame).WithMany(x => x.ExamePrecos);
-            builder.HasOne(X => X.Convenio).WithMany(x => x.ExamePrecos);
+            builder.HasOne(x => x.Convenio).WithMany(x => x.ExamePrecos);
 
         }
     }

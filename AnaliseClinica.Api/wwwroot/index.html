@@ -128,29 +128,24 @@
                         </div>
                     </form>
 
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-md-12 text-right" style="padding-top: 10px">
                             <button type="button" class="btn btn-primary btn-sm" onclick="OrdemServico.AbrirModalCadastroExame()"><i class="fa fa-plus"></i> Adicionar Exames</button>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered table-sm table-responsive-sm">
+                            <table id="tabelaExames" class="table table-bordered table-sm table-responsive-sm">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th></th>
+                                        <th><button class="btn btn-primary btn-sm btn-block" title="Adicionar os exames" onclick="OrdemServico.AbrirModalCadastroExame()"><i class="fa fa-plus"></i></button></th>
+                                        <th>ExameID</th>
                                         <th>Exame</th>
                                         <th>Entrega</th>
                                         <th>Preço</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><button class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button></td>
-                                        <td>Exame exame exame</td>
-                                        <td>10/06/2019</td>
-                                        <td>R$ 123,50</td>
-                                    </tr>
 
                                 </tbody>
                             </table>
@@ -178,35 +173,23 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-3">
-                            <label for="dataCadastro">Data</label>
-                            <input type="date" name="dataCadastro" id="dataCadastro" class="form-control form-control-sm" />
-                        </div>
-                        <div class="col-md-9">
-                            <label for="postoColeta">Posto de Coleta</label>
-                            <input type="text" name="postoColeta" id="postoColeta" class="form-control form-control-sm" />
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-12">
-                            <label for="paciente">Paciente</label>
-                            <input type="text" name="paciente" id="paciente" class="form-control form-control-sm" />
+                            <label for="exame">Exame</label>
+                            <select id="exame" name="exame" class="form-control form-control-sm"></select>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-8">
-                            <label for="medico">Médico</label>
-                            <input type="text" name="medico" id="medico" class="form-control form-control-sm" />
-                        </div>
-
                         <div class="col-md-4">
-                            <label for="convenio">Convênio</label>
-                            <input type="text" name="convenio" id="convenio" class="form-control form-control-sm" />
+                            <label for="entregaResultado">Entrega Resultado</label>
+                            <input type="datetime-local" name="entregaResultado" id="entregaResultado" class="form-control form-control-sm" />
                         </div>
-
+                        <div class="col-md-3">
+                            <label for="precoExame">Preço</label>
+                            <input type="number" id="precoExame" name="precoExame" value="0" step="any" class="form-control form-control-sm"/>
+                        </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>

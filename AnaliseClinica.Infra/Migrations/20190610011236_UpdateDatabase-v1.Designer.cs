@@ -4,14 +4,16 @@ using AnaliseClinica.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnaliseClinica.Infra.Migrations
 {
     [DbContext(typeof(AnaliseClinicaContext))]
-    partial class AnaliseClinicaContextModelSnapshot : ModelSnapshot
+    [Migration("20190610011236_UpdateDatabase-v1")]
+    partial class UpdateDatabasev1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,6 +211,8 @@ namespace AnaliseClinica.Infra.Migrations
 
                     b.Property<int?>("ExameId");
 
+                    b.Property<int?>("ExamePrecoId");
+
                     b.Property<int?>("OrdemServicoId");
 
                     b.Property<decimal>("Preco")
@@ -218,6 +222,8 @@ namespace AnaliseClinica.Infra.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ExameId");
+
+                    b.HasIndex("ExamePrecoId");
 
                     b.HasIndex("OrdemServicoId");
 
@@ -341,6 +347,10 @@ namespace AnaliseClinica.Infra.Migrations
                     b.HasOne("AnaliseClinica.Domain.Entities.Exame", "Exame")
                         .WithMany("OrdemServicoExames")
                         .HasForeignKey("ExameId");
+
+                    b.HasOne("AnaliseClinica.Domain.Entities.ExamePreco")
+                        .WithMany("OrdemServicoExames")
+                        .HasForeignKey("ExamePrecoId");
 
                     b.HasOne("AnaliseClinica.Domain.Entities.OrdemServico", "OrdemServico")
                         .WithMany("OrdemServicoExames")

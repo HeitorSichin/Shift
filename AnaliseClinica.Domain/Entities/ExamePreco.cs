@@ -10,6 +10,5 @@ namespace AnaliseClinica.Domain.Entities
         public virtual Exame Exame { get; set; }
         public virtual Convenio Convenio { get; set; }
 
-        public virtual IEnumerable<OrdemServicoExame> OrdemServicoExames{ get; set; }
     }
 }
